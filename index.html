@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeerCat ERP — Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrapper">
+
+    <!-- ═══════════════════════════════════════
+         SIDEBAR
+    ═══════════════════════════════════════ -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <h1><i class="fas fa-th-large"></i> BeerCat ERP</h1>
+            <small>v2.4.1 — Sistema de Gestión</small>
+        </div>
+
+        <nav>
+            <a href="#" class="active"><i class="fas fa-tachometer-alt nav-icon"></i> Dashboard</a>
+            <a href="#"><i class="fas fa-users nav-icon"></i> Usuarios</a>
+            <a href="#"><i class="fas fa-boxes nav-icon"></i> Inventario</a>
+            <a href="#"><i class="fas fa-shopping-cart nav-icon"></i> Compras</a>
+            <a href="#"><i class="fas fa-chart-line nav-icon"></i> Ventas</a>
+            <a href="#"><i class="fas fa-address-book nav-icon"></i> Clientes</a>
+            <a href="#"><i class="fas fa-truck nav-icon"></i> Proveedores</a>
+            <a href="#"><i class="fas fa-chart-bar nav-icon"></i> Reportes</a>
+            <a href="#"><i class="fas fa-cog nav-icon"></i> Configuración</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <span class="status-dot online"></span>
+            Admin Sistema &nbsp;|&nbsp; 2026-06-18
+        </div>
+
+    </aside>
+
+    <!-- ═══════════════════════════════════════
+         MAIN
+    ═══════════════════════════════════════ -->
+    <main class="main">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-title">
+                <strong>Dashboard General</strong>
+                <small>Sistema de Gestión Empresarial — BeerCat ERP</small>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-secondary btn-sm" onclick="toast('info','Notificaciones','No hay notificaciones nuevas.')">
+                    <i class="fas fa-envelope"></i> Mensajes
+                </button>
+                <div class="avatar" data-tip="Administrador" onclick="openModal('modal-perfil')">A</div>
+                <span>Administrador</span>
+                <button class="btn btn-danger btn-sm" onclick="openModal('modal-logout')">
+                    <i class="fas fa-sign-out-alt"></i> Salir
+                </button>
+            </div>
+        </header>
+
+        <!-- BREADCRUMB -->
+        <div class="breadcrumb">
+            <a href="#"><i class="fas fa-home"></i> Inicio</a>
+            <span class="sep"><i class="fas fa-chevron-right"></i></span>
+            <a href="#">Dashboard</a>
+            <span class="sep"><i class="fas fa-chevron-right"></i></span>
+            <span>General</span>
+        </div>
+
+        <!-- CONTENT -->
+        <section class="content">
+
+            <!-- STAT CARDS -->
+            <div class="cards">
+
+                <div class="card">
+                    <span class="card-icon"><i class="fas fa-dollar-sign"></i></span>
+                    <div class="card-label">Ventas Hoy</div>
+                    <div class="card-value">$2.458.920</div>
+                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +12.4% vs ayer</div>
+                </div>
+
+                <div class="card green">
+                    <span class="card-icon"><i class="fas fa-users"></i></span>
+                    <div class="card-label">Clientes Activos</div>
+                    <div class="card-value">1.284</div>
+                    <div class="card-trend"><i class="fas fa-arrow-up"></i> +8 este mes</div>
+                </div>
+
+                <div class="card orange">
+                    <span class="card-icon"><i class="fas fa-boxes"></i></span>
+                    <div class="card-label">Productos</div>
+                    <div class="card-value">856</div>
+                    <div class="card-trend down"><i class="fas fa-arrow-down"></i> -3 con quiebre</div>
+                </div>
+
+                <div class="card red">
+                    <span class="card-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                    <div class="card-label">Órdenes Pendientes</div>
+                    <div class="card-value">18</div>
+                    <div class="card-trend down"><i class="fas fa-arrow-up"></i> +5 desde ayer</div>
+                </div>
+
+            </div>
+
+            <!-- CHART + ACTIVITY -->
+            <div class="row-2col">
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h3><i class="fas fa-chart-bar"></i> Ventas Mensuales 2026</h3>
+                        <div class="d-flex gap-6">
+                            <button class="btn btn-secondary btn-xs" onclick="toast('info','Exportar','Generando reporte Excel...')">
+                                <i class="fas fa-file-excel"></i> Exportar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="mainChart" height="160"></canvas>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head">
+                        <h3><i class="fas fa-history"></i> Actividad Reciente</h3>
+                    </div>
+                    <div class="panel-body" style="padding:0 14px;">
+                        <ul class="activity-list">
+                            <li>
+                                <span class="a-dot green"></span>
+                                <span>
+                                    Factura #1024 <strong>pagada</strong> — Empresa Alpha
+                                    <span class="a-time">Hace 5 min</span>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="a-dot orange"></span>
+                                <span>
+                                    Orden #1025 en estado <strong>pendiente</strong>
+                                    <span class="a-time">Hace 22 min</span>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="a-dot"></span>
+                                <span>
+                                    Nuevo cliente <strong>Omega Ltda.</strong> registrado
+                                    <span class="a-time">Hace 1 h</span>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="a-dot red"></span>
+                                <span>
+                                    Factura #1027 <strong>anulada</strong> — Servicios Delta
+                                    <span class="a-time">Hace 2 h</span>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="a-dot green"></span>
+                                <span>
+                                    Stock repuesto: <strong>Producto SKU-882</strong>
+                                    <span class="a-time">Hace 3 h</span>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="a-dot orange"></span>
+                                <span>
+                                    Alerta quiebre: <strong>SKU-201, SKU-445</strong>
+                                    <span class="a-time">Hace 4 h</span>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="a-dot"></span>
+                                <span>
+                                    Backup automático <strong>completado</strong>
+                                    <span class="a-time">05:00 AM</span>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- PROGRESS BARS -->
+            <div class="panel mb-16">
+                <div class="panel-head">
+                    <h3><i class="fas fa-tasks"></i> Indicadores de Cumplimiento</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-row">
+                        <div>
+                            <div class="progress-wrap">
+                                <div class="progress-label"><span>Meta de Ventas</span><span>78%</span></div>
+                                <div class="progress"><div class="progress-bar" style="width:78%"></div></div>
+                            </div>
+                            <div class="progress-wrap">
+                                <div class="progress-label"><span>Cobranza</span><span>91%</span></div>
+                                <div class="progress"><div class="progress-bar green" style="width:91%"></div></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="progress-wrap">
+                                <div class="progress-label"><span>Capacidad Bodega</span><span>62%</span></div>
+                                <div class="progress"><div class="progress-bar orange" style="width:62%"></div></div>
+                            </div>
+                            <div class="progress-wrap">
+                                <div class="progress-label"><span>Despachos Atrasados</span><span>23%</span></div>
+                                <div class="progress"><div class="progress-bar red" style="width:23%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABS -->
+            <div class="tabs">
+
+                <div class="tab-bar">
+                    <button class="tab-btn active" data-tab="tab-tabla">
+                        <i class="fas fa-list"></i> Movimientos
+                    </button>
+                    <button class="tab-btn" data-tab="tab-formulario">
+                        <i class="fas fa-file-alt"></i> Formulario
+                    </button>
+                    <button class="tab-btn" data-tab="tab-componentes">
+                        <i class="fas fa-layer-group"></i> Componentes
+                    </button>
+                </div>
+
+                <div class="tab-content">
+
+                    <!-- TAB: TABLA -->
+                    <div class="tab-pane active" id="tab-tabla">
+
+                        <div class="d-flex gap-8 mb-12 align-center" style="flex-wrap:wrap;">
+                            <input type="text" class="form-control" id="busqueda" placeholder="RUT, cliente o documento..." style="width:220px;" oninput="filtrarTabla()">
+                            <select class="form-control" id="filtroEstado" style="width:160px;" onchange="filtrarTabla()">
+                                <option value="">Todos los estados</option>
+                                <option>Pagada</option>
+                                <option>Pendiente</option>
+                                <option>Anulada</option>
+                            </select>
+                            <input type="date" class="form-control" style="width:150px;" value="2026-06-18">
+                            <button class="btn btn-primary btn-sm" onclick="filtrarTabla()">
+                                <i class="fas fa-search"></i> Buscar
+                            </button>
+                            <button class="btn btn-secondary btn-sm" onclick="limpiarFiltros()">
+                                <i class="fas fa-eraser"></i> Limpiar
+                            </button>
+                            <div style="flex:1;"></div>
+                            <button class="btn btn-success btn-sm" onclick="openModal('modal-nueva-factura')">
+                                <i class="fas fa-plus"></i> Nueva Factura
+                            </button>
+                        </div>
+
+                        <div class="table-wrap">
+                            <table id="tablaMovimientos">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Fecha</th>
+                                        <th>Cliente</th>
+                                        <th>Tipo</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaBody">
+                                    <tr>
+                                        <td><strong>#1024</strong></td>
+                                        <td>18/06/2026</td>
+                                        <td>Empresa Alpha Ltda.</td>
+                                        <td>Factura</td>
+                                        <td><strong>$185.000</strong></td>
+                                        <td><span class="badge badge-success">Pagada</span></td>
+                                        <td class="d-flex gap-6">
+                                            <button class="btn btn-secondary btn-xs" onclick="openModal('modal-ver-doc')"><i class="fas fa-eye"></i> Ver</button>
+                                            <button class="btn btn-warning btn-xs" onclick="toast('warning','Editar','Abriendo editor...')"><i class="fas fa-pen"></i> Editar</button>
+                                            <button class="btn btn-danger btn-xs" onclick="openModal('modal-confirmar')"><i class="fas fa-ban"></i> Anular</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>#1025</strong></td>
+                                        <td>18/06/2026</td>
+                                        <td>Comercial Beta SpA</td>
+                                        <td>Factura</td>
+                                        <td><strong>$520.000</strong></td>
+                                        <td><span class="badge badge-warning">Pendiente</span></td>
+                                        <td class="d-flex gap-6">
+                                            <button class="btn btn-secondary btn-xs" onclick="openModal('modal-ver-doc')"><i class="fas fa-eye"></i> Ver</button>
+                                            <button class="btn btn-warning btn-xs" onclick="toast('warning','Editar','Abriendo editor...')"><i class="fas fa-pen"></i> Editar</button>
+                                            <button class="btn btn-danger btn-xs" onclick="openModal('modal-confirmar')"><i class="fas fa-ban"></i> Anular</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>#1026</strong></td>
+                                        <td>18/06/2026</td>
+                                        <td>Transportes Gamma</td>
+                                        <td>Boleta</td>
+                                        <td><strong>$42.500</strong></td>
+                                        <td><span class="badge badge-success">Pagada</span></td>
+                                        <td class="d-flex gap-6">
+                                            <button class="btn btn-secondary btn-xs" onclick="openModal('modal-ver-doc')"><i class="fas fa-eye"></i> Ver</button>
+                                            <button class="btn btn-warning btn-xs" onclick="toast('warning','Editar','Abriendo editor...')"><i class="fas fa-pen"></i> Editar</button>
+                                            <button class="btn btn-danger btn-xs" onclick="openModal('modal-confirmar')"><i class="fas fa-ban"></i> Anular</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>#1027</strong></td>
+                                        <td>17/06/2026</td>
+                                        <td>Servicios Delta</td>
+                                        <td>Factura</td>
+                                        <td><strong>$960.000</strong></td>
+                                        <td><span class="badge badge-danger">Anulada</span></td>
+                                        <td class="d-flex gap-6">
+                                            <button class="btn btn-secondary btn-xs" onclick="openModal('modal-ver-doc')"><i class="fas fa-eye"></i> Ver</button>
+                                            <button class="btn btn-warning btn-xs" onclick="toast('warning','Editar','Abriendo editor...')"><i class="fas fa-pen"></i> Editar</button>
+                                            <button class="btn btn-danger btn-xs" onclick="openModal('modal-confirmar')"><i class="fas fa-ban"></i> Anular</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>#1028</strong></td>
+                                        <td>17/06/2026</td>
+                                        <td>Inversiones Omega</td>
+                                        <td>Factura</td>
+                                        <td><strong>$73.100</strong></td>
+                                        <td><span class="badge badge-success">Pagada</span></td>
+                                        <td class="d-flex gap-6">
+                                            <button class="btn btn-secondary btn-xs" onclick="openModal('modal-ver-doc')"><i class="fas fa-eye"></i> Ver</button>
+                                            <button class="btn btn-warning btn-xs" onclick="toast('warning','Editar','Abriendo editor...')"><i class="fas fa-pen"></i> Editar</button>
+                                            <button class="btn btn-danger btn-xs" onclick="openModal('modal-confirmar')"><i class="fas fa-ban"></i> Anular</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>#1029</strong></td>
+                                        <td>16/06/2026</td>
+                                        <td>Ingeniería Zeta SpA</td>
+                                        <td>OC</td>
+                                        <td><strong>$1.240.000</strong></td>
+                                        <td><span class="badge badge-info">En Revisión</span></td>
+                                        <td class="d-flex gap-6">
+                                            <button class="btn btn-secondary btn-xs" onclick="openModal('modal-ver-doc')"><i class="fas fa-eye"></i> Ver</button>
+                                            <button class="btn btn-warning btn-xs" onclick="toast('warning','Editar','Abriendo editor...')"><i class="fas fa-pen"></i> Editar</button>
+                                            <button class="btn btn-danger btn-xs" onclick="openModal('modal-confirmar')"><i class="fas fa-ban"></i> Anular</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="d-flex justify-between align-center mt-12">
+                            <span class="text-muted text-small">Mostrando 6 de 248 registros</span>
+                            <div class="pagination">
+                                <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                                <button class="page-btn active">1</button>
+                                <button class="page-btn" onclick="toast('info','Paginación','Cargando página 2...')">2</button>
+                                <button class="page-btn" onclick="toast('info','Paginación','Cargando página 3...')">3</button>
+                                <button class="page-btn">...</button>
+                                <button class="page-btn" onclick="toast('info','Paginación','Cargando página 42...')">42</button>
+                                <button class="page-btn" onclick="toast('info','Paginación','Cargando página 2...')"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- TAB: FORMULARIO -->
+                    <div class="tab-pane" id="tab-formulario">
+
+                        <div class="alert alert-info mb-12">
+                            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                            <div class="alert-body">
+                                <div class="alert-title">Formulario de ejemplo</div>
+                                Todos los campos marcados con * son obligatorios.
+                            </div>
+                            <button class="alert-close" onclick="cerrarAlert(this)"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <form onsubmit="return enviarFormulario(event)">
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">RUT Cliente *</label>
+                                    <input type="text" class="form-control" id="f-rut" placeholder="12.345.678-9">
+                                    <div class="form-hint">Sin puntos ni guión.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Razón Social *</label>
+                                    <input type="text" class="form-control" id="f-razon" placeholder="Empresa Ejemplo Ltda.">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Tipo de Documento *</label>
+                                    <select class="form-control" id="f-tipo">
+                                        <option value="">Seleccionar...</option>
+                                        <option>Factura Electrónica</option>
+                                        <option>Boleta Electrónica</option>
+                                        <option>Orden de Compra</option>
+                                        <option>Nota de Crédito</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Fecha Emisión</label>
+                                    <input type="date" class="form-control" value="2026-06-18">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Descripción / Glosa</label>
+                                <textarea class="form-control" placeholder="Detalle de productos o servicios..."></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Monto Neto</label>
+                                    <input type="number" class="form-control" placeholder="0">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Condición de Pago</label>
+                                    <select class="form-control">
+                                        <option>Contado</option>
+                                        <option>30 días</option>
+                                        <option>60 días</option>
+                                        <option>90 días</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-check">
+                                    <input type="checkbox"> Enviar copia por correo al cliente
+                                </label>
+                                <label class="form-check">
+                                    <input type="checkbox" checked> Registrar en libro de ventas
+                                </label>
+                                <label class="form-check">
+                                    <input type="radio" name="prioridad" checked> Prioridad normal
+                                </label>
+                                <label class="form-check">
+                                    <input type="radio" name="prioridad"> Prioridad alta
+                                </label>
+                            </div>
+
+                            <hr class="divider">
+
+                            <div class="d-flex gap-8 justify-end">
+                                <button type="button" class="btn btn-secondary" onclick="limpiarForm()">
+                                    <i class="fas fa-eraser"></i> Limpiar
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Guardar Documento
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <!-- TAB: COMPONENTES -->
+                    <div class="tab-pane" id="tab-componentes">
+
+                        <!-- BOTONES -->
+                        <div class="section-title">Botones</div>
+                        <div class="comp-row">
+                            <button class="btn btn-primary"><i class="fas fa-check"></i> Primario</button>
+                            <button class="btn btn-secondary"><i class="fas fa-minus"></i> Secundario</button>
+                            <button class="btn btn-success"><i class="fas fa-check-circle"></i> Éxito</button>
+                            <button class="btn btn-warning"><i class="fas fa-exclamation-triangle"></i> Advertencia</button>
+                            <button class="btn btn-danger"><i class="fas fa-trash"></i> Peligro</button>
+                        </div>
+                        <div class="comp-row">
+                            <button class="btn btn-primary btn-lg"><i class="fas fa-star"></i> Grande</button>
+                            <button class="btn btn-primary"><i class="fas fa-star"></i> Normal</button>
+                            <button class="btn btn-primary btn-sm"><i class="fas fa-star"></i> Pequeño</button>
+                            <button class="btn btn-primary btn-xs"><i class="fas fa-star"></i> Mini</button>
+                        </div>
+                        <div class="comp-row">
+                            <button class="btn btn-primary" onclick="toast('info','Info','Botón primario clickeado.')"><i class="fas fa-bell"></i> Info</button>
+                            <button class="btn btn-success" onclick="toast('success','Guardado','Registro guardado correctamente.')"><i class="fas fa-save"></i> Éxito</button>
+                            <button class="btn btn-warning" onclick="toast('warning','Atención','Revisa los datos ingresados.')"><i class="fas fa-exclamation"></i> Aviso</button>
+                            <button class="btn btn-danger" onclick="toast('danger','Error','No se pudo completar la operación.')"><i class="fas fa-times"></i> Error</button>
+                            <div class="spinner"></div>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- BADGES -->
+                        <div class="section-title">Badges y Estado</div>
+                        <div class="comp-row">
+                            <span class="badge badge-success"><i class="fas fa-check"></i> Pagada</span>
+                            <span class="badge badge-warning"><i class="fas fa-clock"></i> Pendiente</span>
+                            <span class="badge badge-danger"><i class="fas fa-ban"></i> Anulada</span>
+                            <span class="badge badge-info"><i class="fas fa-search"></i> En Revisión</span>
+                            <span class="badge badge-neutral"><i class="fas fa-pencil-alt"></i> Borrador</span>
+                        </div>
+                        <div class="comp-row">
+                            <span><span class="status-dot online"></span> En línea</span>
+                            <span><span class="status-dot away"></span> Ausente</span>
+                            <span><span class="status-dot offline"></span> Desconectado</span>
+                            <span><span class="status-dot"></span> Desconocido</span>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- ALERTS -->
+                        <div class="section-title">Alertas</div>
+
+                        <div class="alert alert-info">
+                            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                            <div class="alert-body">
+                                <div class="alert-title">Información</div>
+                                Hay una actualización disponible del sistema.
+                            </div>
+                            <button class="alert-close" onclick="cerrarAlert(this)"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="alert alert-success">
+                            <span class="alert-icon"><i class="fas fa-check-circle"></i></span>
+                            <div class="alert-body">
+                                <div class="alert-title">Éxito</div>
+                                El documento fue emitido y enviado al SII correctamente.
+                            </div>
+                            <button class="alert-close" onclick="cerrarAlert(this)"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                            <div class="alert-body">
+                                <div class="alert-title">Advertencia</div>
+                                El stock de 3 productos está bajo el mínimo configurado.
+                            </div>
+                            <button class="alert-close" onclick="cerrarAlert(this)"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <div class="alert alert-danger">
+                            <span class="alert-icon"><i class="fas fa-times-circle"></i></span>
+                            <div class="alert-body">
+                                <div class="alert-title">Error</div>
+                                No se pudo conectar con el servidor del SII. Intente más tarde.
+                            </div>
+                            <button class="alert-close" onclick="cerrarAlert(this)"><i class="fas fa-times"></i></button>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- MODALES -->
+                        <div class="section-title">Modales</div>
+                        <div class="comp-row">
+                            <button class="btn btn-primary" onclick="openModal('modal-info')"><i class="fas fa-info-circle"></i> Modal Info</button>
+                            <button class="btn btn-success" onclick="openModal('modal-form')"><i class="fas fa-pen"></i> Modal Formulario</button>
+                            <button class="btn btn-danger" onclick="openModal('modal-confirmar')"><i class="fas fa-exclamation-triangle"></i> Confirmación</button>
+                            <button class="btn btn-secondary" onclick="openModal('modal-ver-doc')"><i class="fas fa-file-invoice"></i> Ver Documento</button>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- DROPDOWN -->
+                        <div class="section-title">Dropdown</div>
+                        <div class="comp-row">
+                            <div class="dropdown" id="dd1">
+                                <button class="btn btn-secondary" onclick="toggleDropdown('dd1')">
+                                    <i class="fas fa-ellipsis-v"></i> Acciones <i class="fas fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="#" onclick="toast('info','Acción','Editar seleccionado.');closeDropdown('dd1');return false;"><i class="fas fa-pen"></i> Editar</a>
+                                    <a href="#" onclick="toast('info','Acción','Duplicar seleccionado.');closeDropdown('dd1');return false;"><i class="fas fa-copy"></i> Duplicar</a>
+                                    <a href="#" onclick="toast('info','Acción','Exportar seleccionado.');closeDropdown('dd1');return false;"><i class="fas fa-file-pdf"></i> Exportar PDF</a>
+                                    <div class="dropdown-divider"></div>
+                                    <button class="dd-item" onclick="openModal('modal-confirmar');closeDropdown('dd1')"><i class="fas fa-trash"></i> Eliminar</button>
+                                </div>
+                            </div>
+                            <div class="dropdown" id="dd2">
+                                <button class="btn btn-primary" onclick="toggleDropdown('dd2')">
+                                    <i class="fas fa-plus"></i> Nuevo <i class="fas fa-caret-down"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="#" onclick="openModal('modal-nueva-factura');closeDropdown('dd2');return false;"><i class="fas fa-file-invoice-dollar"></i> Factura</a>
+                                    <a href="#" onclick="toast('info','Nuevo','Creando boleta...');closeDropdown('dd2');return false;"><i class="fas fa-receipt"></i> Boleta</a>
+                                    <a href="#" onclick="toast('info','Nuevo','Creando nota de crédito...');closeDropdown('dd2');return false;"><i class="fas fa-file-alt"></i> Nota de Crédito</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- TOOLTIPS -->
+                        <div class="section-title">Tooltips</div>
+                        <div class="comp-row">
+                            <button class="btn btn-secondary" data-tip="Guarda el registro actual"><i class="fas fa-save"></i> Guardar</button>
+                            <button class="btn btn-secondary" data-tip="Exporta en formato Excel .xlsx"><i class="fas fa-file-excel"></i> Exportar</button>
+                            <button class="btn btn-danger" data-tip="Esta acción no se puede deshacer"><i class="fas fa-trash"></i> Eliminar</button>
+                            <span class="badge badge-info" data-tip="Documento enviado al SII y en proceso de validación"><i class="fas fa-search"></i> En Revisión</span>
+                        </div>
+
+                        <hr class="divider">
+
+                        <!-- PROGRESS BARS DEMO -->
+                        <div class="section-title">Barras de Progreso</div>
+                        <div class="progress-wrap">
+                            <div class="progress-label"><span><i class="fas fa-sync-alt"></i> Sincronización SII</span><span id="pct-sii">0%</span></div>
+                            <div class="progress"><div class="progress-bar" id="bar-sii" style="width:0%"></div></div>
+                        </div>
+                        <div class="comp-row">
+                            <button class="btn btn-secondary btn-sm" onclick="simularCarga()">
+                                <i class="fas fa-play"></i> Simular Carga
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODALES
+═══════════════════════════════════════════════════════════ -->
+
+<!-- Modal: Info -->
+<div class="modal-overlay" id="modal-info">
+    <div class="modal modal-sm">
+        <div class="modal-head">
+            <h4><i class="fas fa-info-circle"></i> Información del Sistema</h4>
+            <button class="modal-close" onclick="closeModal('modal-info')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <p class="mb-8"><strong>BeerCat ERP</strong> v2.4.1</p>
+            <p class="text-muted text-small mb-8">Motor: PHP 8.2 — BD: PostgreSQL 15.3</p>
+            <p class="text-muted text-small mb-8">Última sincronización SII: 18/06/2026 08:14</p>
+            <hr class="divider">
+            <p class="text-small">Licencia activa hasta: <strong>31/12/2026</strong></p>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-info')"><i class="fas fa-times"></i> Cerrar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Ver documento -->
+<div class="modal-overlay" id="modal-ver-doc">
+    <div class="modal modal-lg">
+        <div class="modal-head">
+            <h4><i class="fas fa-file-invoice-dollar"></i> Documento #1024 — Factura Electrónica</h4>
+            <button class="modal-close" onclick="closeModal('modal-ver-doc')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-row mb-12">
+                <div>
+                    <div class="text-xs text-muted">EMISOR</div>
+                    <div><strong>BeerCat Comercial S.A.</strong></div>
+                    <div class="text-small">RUT: 76.123.456-7</div>
+                    <div class="text-small">Giro: Comercio al por mayor</div>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs text-muted">FOLIO</div>
+                    <div style="font-size:22px;font-weight:bold;color:#1a2a3a;">#1024</div>
+                    <span class="badge badge-success"><i class="fas fa-check"></i> PAGADA</span>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="form-row mb-12">
+                <div>
+                    <div class="text-xs text-muted mb-8">RECEPTOR</div>
+                    <div><strong>Empresa Alpha Ltda.</strong></div>
+                    <div class="text-small">RUT: 77.888.999-0</div>
+                    <div class="text-small">Dirección: Av. Providencia 1234, Santiago</div>
+                </div>
+                <div>
+                    <div class="text-xs text-muted mb-8">FECHAS</div>
+                    <div class="text-small">Emisión: <strong>18/06/2026</strong></div>
+                    <div class="text-small">Vencimiento: <strong>18/07/2026</strong></div>
+                    <div class="text-small">Pago: <strong>20/06/2026</strong></div>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ítem</th>
+                        <th>Cant.</th>
+                        <th>P. Unit.</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Servicio de Consultoría — Junio 2026</td>
+                        <td>1</td>
+                        <td>$100.000</td>
+                        <td>$100.000</td>
+                    </tr>
+                    <tr>
+                        <td>Licencia Software Anual</td>
+                        <td>1</td>
+                        <td>$55.462</td>
+                        <td>$55.462</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="text-right mt-12">
+                <div class="text-small">Neto: <strong>$155.462</strong></div>
+                <div class="text-small">IVA 19%: <strong>$29.538</strong></div>
+                <div style="font-size:15px;font-weight:bold;margin-top:4px;">Total: $185.000</div>
+            </div>
+
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-ver-doc')"><i class="fas fa-times"></i> Cerrar</button>
+            <button class="btn btn-warning btn-sm" onclick="toast('warning','PDF','Generando PDF...');closeModal('modal-ver-doc')"><i class="fas fa-file-pdf"></i> Descargar PDF</button>
+            <button class="btn btn-primary btn-sm" onclick="toast('success','Email','Correo enviado al cliente.');closeModal('modal-ver-doc')"><i class="fas fa-paper-plane"></i> Reenviar por Email</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Nueva Factura -->
+<div class="modal-overlay" id="modal-nueva-factura">
+    <div class="modal">
+        <div class="modal-head success">
+            <h4><i class="fas fa-plus-circle"></i> Nueva Factura Electrónica</h4>
+            <button class="modal-close" onclick="closeModal('modal-nueva-factura')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label">RUT Cliente *</label>
+                <input type="text" class="form-control" placeholder="12.345.678-9">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Razón Social *</label>
+                <input type="text" class="form-control" placeholder="Nombre empresa o persona">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Monto Neto *</label>
+                    <input type="number" class="form-control" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Condición de Pago</label>
+                    <select class="form-control">
+                        <option>Contado</option>
+                        <option>30 días</option>
+                        <option>60 días</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Glosa</label>
+                <textarea class="form-control" placeholder="Descripción del documento..."></textarea>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-nueva-factura')"><i class="fas fa-times"></i> Cancelar</button>
+            <button class="btn btn-success btn-sm" onclick="toast('success','Creada','Factura #1030 emitida correctamente.');closeModal('modal-nueva-factura')"><i class="fas fa-paper-plane"></i> Emitir Factura</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Formulario genérico -->
+<div class="modal-overlay" id="modal-form">
+    <div class="modal">
+        <div class="modal-head">
+            <h4><i class="fas fa-pen"></i> Editar Registro</h4>
+            <button class="modal-close" onclick="closeModal('modal-form')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-warning mb-12">
+                <span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                <div class="alert-body">Los cambios se aplicarán de inmediato al sistema.</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Campo de texto</label>
+                <input type="text" class="form-control" value="Valor actual">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Selector</label>
+                <select class="form-control">
+                    <option>Opción A</option>
+                    <option selected>Opción B</option>
+                    <option>Opción C</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Campo con error</label>
+                <input type="text" class="form-control error" value="valor inválido">
+                <div class="form-hint error"><i class="fas fa-exclamation-circle"></i> Este valor no es válido.</div>
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-form')"><i class="fas fa-times"></i> Cancelar</button>
+            <button class="btn btn-primary btn-sm" onclick="toast('success','Guardado','Cambios guardados.');closeModal('modal-form')"><i class="fas fa-save"></i> Guardar Cambios</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Confirmación peligro -->
+<div class="modal-overlay" id="modal-confirmar">
+    <div class="modal modal-sm">
+        <div class="modal-head danger">
+            <h4><i class="fas fa-exclamation-triangle"></i> Confirmar Acción</h4>
+            <button class="modal-close" onclick="closeModal('modal-confirmar')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body text-center" style="padding:24px 18px;">
+            <div style="font-size:40px;margin-bottom:12px;color:#c04040;"><i class="fas fa-trash-alt"></i></div>
+            <p class="fw-bold mb-8" style="font-size:14px;">¿Anular este documento?</p>
+            <p class="text-muted text-small">Esta acción no se puede deshacer. El folio quedará registrado como anulado en el SII.</p>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-confirmar')"><i class="fas fa-times"></i> Cancelar</button>
+            <button class="btn btn-danger btn-sm" onclick="toast('danger','Anulada','Factura anulada en el SII.');closeModal('modal-confirmar')"><i class="fas fa-ban"></i> Sí, Anular</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Perfil -->
+<div class="modal-overlay" id="modal-perfil">
+    <div class="modal modal-sm">
+        <div class="modal-head">
+            <h4><i class="fas fa-user-circle"></i> Mi Perfil</h4>
+            <button class="modal-close" onclick="closeModal('modal-perfil')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="d-flex gap-12 align-center mb-12">
+                <div class="avatar" style="width:48px;height:48px;font-size:20px;flex-shrink:0;">A</div>
+                <div>
+                    <div class="fw-bold">Administrador Sistema</div>
+                    <div class="text-small text-muted">admin@BeerCat.cl</div>
+                    <span class="badge badge-success" style="margin-top:4px;"><i class="fas fa-check"></i> Activo</span>
+                </div>
+            </div>
+            <hr class="divider">
+            <div class="form-group">
+                <label class="form-label"><i class="fas fa-lock"></i> Cambiar Contraseña</label>
+                <input type="password" class="form-control" placeholder="Nueva contraseña">
+            </div>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-perfil')"><i class="fas fa-times"></i> Cerrar</button>
+            <button class="btn btn-primary btn-sm" onclick="toast('success','Perfil','Contraseña actualizada.');closeModal('modal-perfil')"><i class="fas fa-save"></i> Guardar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Logout -->
+<div class="modal-overlay" id="modal-logout">
+    <div class="modal modal-sm">
+        <div class="modal-head">
+            <h4><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</h4>
+            <button class="modal-close" onclick="closeModal('modal-logout')"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="modal-body text-center" style="padding:22px 18px;">
+            <div style="font-size:36px;margin-bottom:12px;color:#4a6a8a;"><i class="fas fa-door-open"></i></div>
+            <p class="fw-bold mb-8">¿Desea cerrar la sesión actual?</p>
+            <p class="text-muted text-small">Todos los cambios no guardados se perderán.</p>
+        </div>
+        <div class="modal-foot">
+            <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-logout')"><i class="fas fa-times"></i> Cancelar</button>
+            <button class="btn btn-danger btn-sm" onclick="toast('info','Sesión','Cerrando sesión...');closeModal('modal-logout')"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- SIDEBAR OVERLAY (móvil) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
